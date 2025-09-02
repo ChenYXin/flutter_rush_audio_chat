@@ -1,0 +1,32 @@
+{
+  "title_home":"首页",
+  "title_Recommend":"推荐",
+  "title_chat":"聊天",
+  "title_profile":"个人中心",
+
+  "language":"语言",
+
+  "settings":"设置",
+
+  "profile_user_nickname":"用户昵称",
+  "profile_user_id":"ID: {userId}",
+  "profile_coins":"金币",
+  "profile_diamonds":"钻石",
+  "profile_likes":"获赞",
+  "profile_quick_actions":"快捷功能",
+  "profile_my_wallet":"我的钱包",
+  "profile_my_photos":"我的相册",
+  "profile_my_videos":"我的视频",
+  "profile_my_favorites":"我的收藏",
+  "profile_personal_info":"个人信息",
+  "profile_personal_info_subtitle":"编辑个人资料",
+  "profile_account_security":"账号安全",
+  "profile_account_security_subtitle":"密码、隐私设置",
+  "profile_notifications":"消息通知",
+  "profile_notifications_subtitle":"推送、提醒设置",
+  "profile_language_settings":"语言设置",
+  "profile_language_settings_subtitle":"切换应用语言",
+  "profile_settings_subtitle":"更多设置选项",
+  "profile_help_feedback":"帮助与反馈",
+  "profile_help_feedback_subtitle":"常见问题、意见反馈"
+}

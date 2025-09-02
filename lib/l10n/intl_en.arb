@@ -1,0 +1,32 @@
+{
+  "title_home":"Home",
+  "title_Recommend":"Recommend",
+  "title_chat":"Chat",
+  "title_profile":"Profile",
+
+  "language":"Language",
+
+  "settings":"Settings",
+
+  "profile_user_nickname":"User Nickname",
+  "profile_user_id":"ID: {userId}",
+  "profile_coins":"Coins",
+  "profile_diamonds":"Diamonds",
+  "profile_likes":"Likes",
+  "profile_quick_actions":"Quick Actions",
+  "profile_my_wallet":"My Wallet",
+  "profile_my_photos":"My Photos",
+  "profile_my_videos":"My Videos",
+  "profile_my_favorites":"My Favorites",
+  "profile_personal_info":"Personal Info",
+  "profile_personal_info_subtitle":"Edit personal profile",
+  "profile_account_security":"Account Security",
+  "profile_account_security_subtitle":"Password, privacy settings",
+  "profile_notifications":"Notifications",
+  "profile_notifications_subtitle":"Push, reminder settings",
+  "profile_language_settings":"Language Settings",
+  "profile_language_settings_subtitle":"Switch app language",
+  "profile_settings_subtitle":"More setting options",
+  "profile_help_feedback":"Help & Feedback",
+  "profile_help_feedback_subtitle":"FAQ, feedback"
+}
