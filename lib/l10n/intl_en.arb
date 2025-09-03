@@ -1,12 +1,18 @@
 {
   "title_home":"Home",
-  "title_Recommend":"Recommend",
   "title_chat":"Chat",
   "title_profile":"Profile",
 
   "language":"Language",
+  "language_selection":"Language Selection",
+  "language_changed":"Language changed to {languageName}",
 
   "settings":"Settings",
+  "settings_detail":"Settings Detail",
+  "general":"General",
+  "appearance":"Appearance",
+  "privacy":"Privacy",
+  "about":"About",
 
   "profile_user_nickname":"User Nickname",
   "profile_user_id":"ID: {userId}",
@@ -24,9 +30,41 @@
   "profile_account_security_subtitle":"Password, privacy settings",
   "profile_notifications":"Notifications",
   "profile_notifications_subtitle":"Push, reminder settings",
-  "profile_language_settings":"Language Settings",
-  "profile_language_settings_subtitle":"Switch app language",
   "profile_settings_subtitle":"More setting options",
   "profile_help_feedback":"Help & Feedback",
-  "profile_help_feedback_subtitle":"FAQ, feedback"
+  "profile_help_feedback_subtitle":"FAQ, feedback",
+
+  "theme_color":"Theme Color",
+  "dark_mode":"Dark Mode",
+  "notifications":"Notifications",
+  "privacy_policy":"Privacy Policy",
+  "legal_notice":"Legal Notice",
+  "version_info":"Version Info",
+  "terms_of_service":"Terms of Service",
+  "version":"Version",
+  "contact_us":"Contact Us",
+  "logout":"Logout",
+
+  "nickname":"Nickname",
+
+  "not_found_title":"Page Not Found",
+  "not_found_subtitle":"Sorry, the page you are looking for does not exist",
+  "not_found_description":"The page may have been moved, deleted, or you entered the wrong URL",
+  "back_to_home":"Back to Home",
+  "back_to_previous":"Back to Previous",
+
+  "ok":"OK",
+  "cancel":"Cancel",
+  "confirm":"Confirm",
+  "save":"Save",
+  "edit":"Edit",
+  "delete":"Delete",
+  "share":"Share",
+  "copy":"Copy",
+  "search":"Search",
+  "loading":"Loading...",
+  "error":"Error",
+  "success":"Success",
+  "warning":"Warning",
+  "info":"Info"
 }

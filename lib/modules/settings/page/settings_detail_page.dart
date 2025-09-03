@@ -8,7 +8,9 @@ import '../../../commom/my_color.dart';
 import '../../../commom/my_language.dart';
 import '../../../dialog/select_theme_color_dialog.dart';
 import '../setting_router.dart';
+import '../viewmodel/settings_viewmodel.dart';
 
+/// 设置详情页面
 class SettingsDetailPage extends StatefulWidget {
   const SettingsDetailPage({super.key});
 
@@ -18,17 +20,40 @@ class SettingsDetailPage extends StatefulWidget {
 
 class _SettingsDetailPageState extends State<SettingsDetailPage> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+
+
+  // ==================== UI构建方法 ====================
+
+  @override
   Widget build(BuildContext context) {
+    return Consumer<SettingsViewModel>(
+      builder: (context, viewModel, child) {
+        return _buildContent(context, viewModel);
+      },
+    );
+  }
+
+  Widget _buildContent(BuildContext context, SettingsViewModel viewModel) {
     return Scaffold(
-      backgroundColor: background,
       appBar: AppBar(
-        backgroundColor: context.watch<MyColor>().colorPrimary,
-        iconTheme: IconThemeData(color: Colors.white),
-        title: Text(
-          S.of(context).settings,
-          style: const TextStyle(fontFamily: fontFamily, fontSize: 18,color: Colors.white),
-        ),
+        title: Text(S.of(context).settings),
+        actions: [
+          if (viewModel.isLoading)
+            const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+            ),
+        ],
       ),
+      backgroundColor: background,
       body: Column(children: [_buildSettingList()]),
     );
   }
@@ -42,9 +67,7 @@ class _SettingsDetailPageState extends State<SettingsDetailPage> {
         SettingsSection(
           tiles: <SettingsTile>[
             SettingsTile.navigation(
-              onPressed: (context) {
-                SelectThemeColorDialog(context: context).show();
-              },
+              onPressed: (context) => SelectThemeColorDialog(context: context).show(),
               trailing: Row(
                 children: [
                   Container(
@@ -66,27 +89,23 @@ class _SettingsDetailPageState extends State<SettingsDetailPage> {
                 color: context.watch<MyColor>().colorPrimary,
               ),
               title: Text(
-                "Theme Color",
-                style: TextStyle(fontFamily: fontFamily, fontSize: 18),
+                S.of(context).theme_color,
+                style: const TextStyle(fontFamily: fontFamily, fontSize: 18),
               ),
             ),
             SettingsTile.navigation(
-              onPressed: (context) {
-                // 导航到语言页面
-                NavigatorUtils.push(
-                    context, SettingRouter.languageSelectionPage);
-              },
+              onPressed: (context) => NavigatorUtils.push(context, SettingRouter.languageSelectionPage),
               trailing: Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(right: 15),
+                    margin: const EdgeInsets.only(right: 15),
                     child: Text(
-                      context.watch<MyLanguage>().language,
-                      style:
-                      const TextStyle(fontFamily: fontFamily, fontSize: 18),
+                      context.watch<MyLanguage>().language == 'zh' ? '简体中文' : 'English',
+                      style: const TextStyle(fontFamily: fontFamily, fontSize: 16, color: Colors.grey),
                     ),
                   ),
-                  Icon(Icons.keyboard_arrow_right),
+                  const Icon(Icons.keyboard_arrow_right),
                 ],
               ),
               leading: Icon(
@@ -108,9 +127,9 @@ class _SettingsDetailPageState extends State<SettingsDetailPage> {
                 Icons.privacy_tip,
                 color: context.watch<MyColor>().colorPrimary,
               ),
-              title: const Text(
-                "Privacy Policy",
-                style: TextStyle(fontFamily: fontFamily, fontSize: 18),
+              title: Text(
+                S.of(context).privacy_policy,
+                style: const TextStyle(fontFamily: fontFamily, fontSize: 18),
               ),
             ),
             SettingsTile.navigation(
@@ -123,9 +142,9 @@ class _SettingsDetailPageState extends State<SettingsDetailPage> {
                 Icons.gavel,
                 color: context.watch<MyColor>().colorPrimary,
               ),
-              title: const Text(
-                "Legal Notice",
-                style: TextStyle(fontFamily: fontFamily, fontSize: 18),
+              title: Text(
+                S.of(context).legal_notice,
+                style: const TextStyle(fontFamily: fontFamily, fontSize: 18),
               ),
             ),
             SettingsTile.navigation(
@@ -138,9 +157,9 @@ class _SettingsDetailPageState extends State<SettingsDetailPage> {
                 Icons.info,
                 color: context.watch<MyColor>().colorPrimary,
               ),
-              title: const Text(
-                "Version Info",
-                style: TextStyle(fontFamily: fontFamily, fontSize: 18),
+              title: Text(
+                S.of(context).version_info,
+                style: const TextStyle(fontFamily: fontFamily, fontSize: 18),
               ),
             ),
           ],

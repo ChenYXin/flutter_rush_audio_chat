@@ -52,6 +52,18 @@ class NavigatorUtils {
     unfocus();
     Navigator.pop<Object>(context, result);
   }
+
+  /// 跳转并清除所有历史页面
+  static void pushAndRemoveUntil(BuildContext context, String path, {Object? arguments}) {
+    unfocus();
+    Routes.router.navigateTo(context, path,
+      clearStack: true,
+      transition: TransitionType.native,
+      routeSettings: RouteSettings(
+        arguments: arguments,
+      ),
+    );
+  }
   
   /// 跳到WebView页
   // static void goWebViewPage(BuildContext context, String title, String url) {

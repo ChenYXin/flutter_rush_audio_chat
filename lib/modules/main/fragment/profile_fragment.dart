@@ -12,7 +12,9 @@ import '../../../res/app.dart';
 import '../../../router/fluro_navigator.dart';
 import '../../../widget/cache_image.dart';
 import '../../settings/setting_router.dart';
+import '../viewmodel/profile_viewmodel.dart';
 
+/// 个人中心页面Fragment
 class ProfileFragment extends StatefulWidget {
   const ProfileFragment({super.key});
 
@@ -22,47 +24,57 @@ class ProfileFragment extends StatefulWidget {
 
 class _ProfileFragmentState extends State<ProfileFragment> {
   @override
+  void initState() {
+    super.initState();
+  }
+  // ==================== UI构建方法 ====================
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: background,
-      body: CustomScrollView(
-        slivers: [
-          // 自定义AppBar和头部区域
-          SliverAppBar(
-            expandedHeight: 280,
-            floating: false,
-            pinned: true,
-            elevation: 0,
-            backgroundColor: context.watch<MyColor>().colorPrimary,
-            flexibleSpace: FlexibleSpaceBar(
-              background: _buildProfileHeader(),
-            ),
-            title: Text(
-              S.of(context).title_profile,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+    return Consumer<ProfileViewModel>(
+      builder: (context, viewModel, child) {
+        return Scaffold(
+          backgroundColor: background,
+          body: CustomScrollView(
+            slivers: [
+              // 自定义AppBar和头部区域
+              SliverAppBar(
+                expandedHeight: 280,
+                floating: false,
+                pinned: true,
+                elevation: 0,
+                backgroundColor: context.watch<MyColor>().colorPrimary,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: _buildProfileHeader(viewModel),
+                ),
+                title: Text(
+                  S.of(context).title_profile,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-            ),
+              // 统计数据卡片
+              SliverToBoxAdapter(
+                child: Transform.translate(
+                  offset: const Offset(0, -10),
+                  child: _buildStatsCard(viewModel),
+                ),
+              ),
+              // 功能菜单
+              SliverToBoxAdapter(
+                child: _buildMenuSection(viewModel),
+              ),
+            ],
           ),
-          // 统计数据卡片
-          SliverToBoxAdapter(
-            child: Transform.translate(
-              offset: const Offset(0, -10),
-              child: _buildStatsCard(),
-            ),
-          ),
-          // 功能菜单
-          SliverToBoxAdapter(
-            child: _buildMenuSection(),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
   // 个人资料头部区域
-  Widget _buildProfileHeader() {
+  Widget _buildProfileHeader(ProfileViewModel viewModel) {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -70,7 +82,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
           end: Alignment.bottomCenter,
           colors: [
             context.watch<MyColor>().colorPrimary,
-            context.watch<MyColor>().colorPrimary.shade700,
+            context.watch<MyColor>().colorPrimary[700] ?? context.watch<MyColor>().colorPrimary,
           ],
         ),
       ),
@@ -93,7 +105,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                 ],
               ),
               child: SvCacheImage(
-                imageUrl: "https://via.placeholder.com/120x120/FF6B6B/FFFFFF?text=Avatar",
+                imageUrl: viewModel.userProfile.avatar,
                 width: 120,
                 height: 120,
                 radius: 60,
@@ -128,9 +140,9 @@ class _ProfileFragmentState extends State<ProfileFragment> {
             ),
             const SizedBox(height: 16),
             // 用户名
-            const Text(
-              "用户昵称",
-              style: TextStyle(
+            Text(
+              viewModel.userProfile.nickname,
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -144,9 +156,9 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                 color: Colors.white.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: const Text(
-                "ID: 123456789",
-                style: TextStyle(
+              child: Text(
+                S.of(context).profile_user_id.replaceAll('{userId}', viewModel.userProfile.id),
+                style: const TextStyle(
                   fontSize: 14,
                   color: Colors.white,
                 ),
@@ -159,7 +171,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
   }
 
   // 统计数据卡片
-  Widget _buildStatsCard() {
+  Widget _buildStatsCard(ProfileViewModel viewModel) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.all(20),
@@ -179,8 +191,8 @@ class _ProfileFragmentState extends State<ProfileFragment> {
           Expanded(
             child: _buildStatItem(
               icon: Icons.monetization_on,
-              value: "9,999",
-              label: "金币",
+              value: viewModel.getFormattedNumber(viewModel.userProfile.coins),
+              label: S.of(context).profile_coins,
               color: Colors.amber,
             ),
           ),
@@ -192,8 +204,8 @@ class _ProfileFragmentState extends State<ProfileFragment> {
           Expanded(
             child: _buildStatItem(
               icon: MdiIcons.diamond,
-              value: "7,777",
-              label: "钻石",
+              value: viewModel.getFormattedNumber(viewModel.userProfile.diamonds),
+              label: S.of(context).profile_diamonds,
               color: Colors.blue,
             ),
           ),
@@ -205,8 +217,8 @@ class _ProfileFragmentState extends State<ProfileFragment> {
           Expanded(
             child: _buildStatItem(
               icon: Icons.favorite,
-              value: "1,234",
-              label: "获赞",
+              value: viewModel.getFormattedNumber(viewModel.userProfile.likes),
+              label: S.of(context).profile_likes,
               color: Colors.red,
             ),
           ),
@@ -251,7 +263,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
   }
 
   // 功能菜单区域
-  Widget _buildMenuSection() {
+  Widget _buildMenuSection(ProfileViewModel viewModel) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -284,9 +296,9 @@ class _ProfileFragmentState extends State<ProfileFragment> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "快捷功能",
-            style: TextStyle(
+          Text(
+            S.of(context).profile_quick_actions,
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.black87,
@@ -298,41 +310,33 @@ class _ProfileFragmentState extends State<ProfileFragment> {
               Expanded(
                 child: _buildQuickActionItem(
                   icon: Icons.wallet,
-                  label: "我的钱包",
+                  label: S.of(context).profile_my_wallet,
                   color: Colors.green,
-                  onTap: () {
-                    // 导航到钱包页面
-                  },
+                  onTap: () => _showMessage('钱包功能开发中...'),
                 ),
               ),
               Expanded(
                 child: _buildQuickActionItem(
                   icon: Icons.photo_library,
-                  label: "我的相册",
+                  label: S.of(context).profile_my_photos,
                   color: Colors.purple,
-                  onTap: () {
-                    // 导航到相册页面
-                  },
+                  onTap: () => _showMessage('相册功能开发中...'),
                 ),
               ),
               Expanded(
                 child: _buildQuickActionItem(
                   icon: MdiIcons.video,
-                  label: "我的视频",
+                  label: S.of(context).profile_my_videos,
                   color: Colors.orange,
-                  onTap: () {
-                    // 导航到视频页面
-                  },
+                  onTap: () => _showMessage('视频功能开发中...'),
                 ),
               ),
               Expanded(
                 child: _buildQuickActionItem(
                   icon: Icons.favorite,
-                  label: "我的收藏",
+                  label: S.of(context).profile_my_favorites,
                   color: Colors.red,
-                  onTap: () {
-                    // 导航到收藏页面
-                  },
+                  onTap: () => _showMessage('收藏功能开发中...'),
                 ),
               ),
             ],
@@ -398,56 +402,38 @@ class _ProfileFragmentState extends State<ProfileFragment> {
         children: [
           _buildMenuTile(
             icon: Icons.person_outline,
-            title: "个人信息",
-            subtitle: "编辑个人资料",
-            onTap: () {
-              // 导航到个人信息页面
-            },
+            title: S.of(context).profile_personal_info,
+            subtitle: S.of(context).profile_personal_info_subtitle,
+            onTap: () => _showMessage('个人信息功能开发中...'),
           ),
           _buildDivider(),
           _buildMenuTile(
             icon: Icons.security,
-            title: "账号安全",
-            subtitle: "密码、隐私设置",
-            onTap: () {
-              // 导航到安全设置页面
-            },
+            title: S.of(context).profile_account_security,
+            subtitle: S.of(context).profile_account_security_subtitle,
+            onTap: () => _showMessage('账号安全功能开发中...'),
           ),
           _buildDivider(),
           _buildMenuTile(
             icon: Icons.notifications_outlined,
-            title: "消息通知",
-            subtitle: "推送、提醒设置",
-            onTap: () {
-              // 导航到通知设置页面
-            },
+            title: S.of(context).profile_notifications,
+            subtitle: S.of(context).profile_notifications_subtitle,
+            onTap: () => _showMessage('通知设置功能开发中...'),
           ),
-          _buildDivider(),
-          _buildMenuTile(
-            icon: Icons.language,
-            title: "语言设置",
-            subtitle: "切换应用语言",
-            onTap: () {
-              // 导航到语言设置页面
-            },
-          ),
+
           _buildDivider(),
           _buildMenuTile(
             icon: Icons.settings,
             title: S.of(context).settings,
-            subtitle: "更多设置选项",
-            onTap: () {
-              NavigatorUtils.push(context, SettingRouter.settingsDetailPage);
-            },
+            subtitle: S.of(context).profile_settings_subtitle,
+            onTap: () => NavigatorUtils.push(context, SettingRouter.settingsDetailPage),
           ),
           _buildDivider(),
           _buildMenuTile(
             icon: Icons.help_outline,
-            title: "帮助与反馈",
-            subtitle: "常见问题、意见反馈",
-            onTap: () {
-              // 导航到帮助页面
-            },
+            title: S.of(context).profile_help_feedback,
+            subtitle: S.of(context).profile_help_feedback_subtitle,
+            onTap: () => _showMessage('帮助反馈功能开发中...'),
           ),
         ],
       ),
@@ -508,6 +494,13 @@ class _ProfileFragmentState extends State<ProfileFragment> {
         height: 1,
         color: Colors.grey.shade200,
       ),
+    );
+  }
+
+  /// 显示消息
+  void _showMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
     );
   }
 }

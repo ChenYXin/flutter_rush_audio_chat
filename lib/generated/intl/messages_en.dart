@@ -22,11 +22,22 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-    "language": MessageLookupByLibrary.simpleMessage("language"),
+    "back_to_home": MessageLookupByLibrary.simpleMessage("Back to Home"),
+    "back_to_previous": MessageLookupByLibrary.simpleMessage("Back to Previous"),
+    "language": MessageLookupByLibrary.simpleMessage("Language"),
+    "language_selection": MessageLookupByLibrary.simpleMessage("Language Selection"),
+    "legal_notice": MessageLookupByLibrary.simpleMessage("Legal Notice"),
+    "nickname": MessageLookupByLibrary.simpleMessage("Nickname"),
+    "not_found_description": MessageLookupByLibrary.simpleMessage("The page may have been moved, deleted, or you entered the wrong URL"),
+    "not_found_subtitle": MessageLookupByLibrary.simpleMessage("Sorry, the page you are looking for does not exist"),
+    "not_found_title": MessageLookupByLibrary.simpleMessage("Page Not Found"),
+    "privacy_policy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
     "settings": MessageLookupByLibrary.simpleMessage("Settings"),
-    "title_Recommend": MessageLookupByLibrary.simpleMessage("Recommend"),
+    "theme_color": MessageLookupByLibrary.simpleMessage("Theme Color"),
+
     "title_chat": MessageLookupByLibrary.simpleMessage("Chat"),
     "title_home": MessageLookupByLibrary.simpleMessage("Home"),
     "title_profile": MessageLookupByLibrary.simpleMessage("Profile"),
+    "version_info": MessageLookupByLibrary.simpleMessage("Version Info"),
   };
 }

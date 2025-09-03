@@ -1,12 +1,18 @@
 {
   "title_home":"首页",
-  "title_Recommend":"推荐",
   "title_chat":"聊天",
   "title_profile":"个人中心",
 
   "language":"语言",
+  "language_selection":"语言选择",
+  "language_changed":"语言已切换为 {languageName}",
 
   "settings":"设置",
+  "settings_detail":"设置详情",
+  "general":"通用",
+  "appearance":"外观",
+  "privacy":"隐私",
+  "about":"关于",
 
   "profile_user_nickname":"用户昵称",
   "profile_user_id":"ID: {userId}",
@@ -24,9 +30,41 @@
   "profile_account_security_subtitle":"密码、隐私设置",
   "profile_notifications":"消息通知",
   "profile_notifications_subtitle":"推送、提醒设置",
-  "profile_language_settings":"语言设置",
-  "profile_language_settings_subtitle":"切换应用语言",
   "profile_settings_subtitle":"更多设置选项",
   "profile_help_feedback":"帮助与反馈",
-  "profile_help_feedback_subtitle":"常见问题、意见反馈"
+  "profile_help_feedback_subtitle":"常见问题、意见反馈",
+
+  "theme_color":"主题颜色",
+  "dark_mode":"深色模式",
+  "notifications":"通知",
+  "privacy_policy":"隐私政策",
+  "legal_notice":"法律声明",
+  "version_info":"版本信息",
+  "terms_of_service":"服务条款",
+  "version":"版本",
+  "contact_us":"联系我们",
+  "logout":"退出登录",
+
+  "nickname":"昵称",
+
+  "not_found_title":"页面未找到",
+  "not_found_subtitle":"抱歉，您访问的页面不存在",
+  "not_found_description":"页面可能已被移动、删除，或者您输入了错误的网址",
+  "back_to_home":"返回首页",
+  "back_to_previous":"返回上一页",
+
+  "ok":"确定",
+  "cancel":"取消",
+  "confirm":"确认",
+  "save":"保存",
+  "edit":"编辑",
+  "delete":"删除",
+  "share":"分享",
+  "copy":"复制",
+  "search":"搜索",
+  "loading":"加载中...",
+  "error":"错误",
+  "success":"成功",
+  "warning":"警告",
+  "info":"信息"
 }

@@ -10,6 +10,14 @@ import 'package:rush_audio_chat/util/handle_error_utils.dart';
 import 'commom/my_color.dart';
 import 'commom/my_language.dart';
 import 'generated/l10n.dart';
+import 'modules/main/viewmodel/main_page_viewmodel.dart';
+import 'modules/main/viewmodel/home_viewmodel.dart';
+import 'modules/main/viewmodel/chat_viewmodel.dart';
+import 'modules/main/viewmodel/profile_viewmodel.dart';
+import 'modules/settings/viewmodel/settings_viewmodel.dart';
+import 'modules/settings/viewmodel/language_viewmodel.dart';
+import 'modules/main/viewmodel/search_viewmodel.dart';
+import 'modules/main/viewmodel/user_detail_viewmodel.dart';
 
 Future<void> main() async{
   /// 异常处理
@@ -28,6 +36,11 @@ Future<void> main() async{
     runApp(MultiProvider(providers: [
       ChangeNotifierProvider(create: (context) => MyColor()),
       ChangeNotifierProvider(create: (context) => MyLanguage()),
+      ChangeNotifierProvider(create: (context) => MainPageViewModel()),
+      ChangeNotifierProvider(create: (context) => HomeViewModel()),
+      ChangeNotifierProvider(create: (context) => ChatViewModel()),
+      ChangeNotifierProvider(create: (context) => ProfileViewModel()),
+      ChangeNotifierProvider(create: (context) => SettingsViewModel()),
     ],child: MyApp(),));
   });
 }
@@ -49,7 +62,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      locale: _listenerLocal(context.watch<MyLanguage>().language),
+      locale: context.watch<MyLanguage>().locale,
       supportedLocales: S.delegate.supportedLocales,
       home: const SplashPage(),
       onGenerateRoute: Routes.router.generator,
@@ -68,17 +81,5 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  _listenerLocal(String lag) {
-    if (lag == "zh") {
-      return const Locale('zh','CN');
-    } else if (lag == "en") {
-      return const Locale('en','US');
-    } else if (lag == "ja") {
-      return Locale('ja');
-    }else if (lag == "au") {
-      return Locale('au','AU');
-    } else if(lag == "ko"){
-      return Locale('ko','KR');
-    }
-  }
+
 }
