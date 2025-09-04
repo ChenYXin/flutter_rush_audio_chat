@@ -2,6 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:rush_audio_chat/modules/main/page/main_page.dart';
 import 'package:rush_audio_chat/modules/main/page/search_page.dart';
 import 'package:rush_audio_chat/modules/main/page/user_detail_page.dart';
+import 'package:rush_audio_chat/modules/chat/page/audio_chat_page.dart';
 
 import '../../router/i_router.dart';
 
@@ -10,6 +11,7 @@ class MainRouter implements IRouterProvider{
   static String mainPage = '/main';
   static String searchPage = '/search';
   static String userDetailPage = '/userDetail';
+  static String audioChatPage = '/audioChat';
   static String videoTagPage = '/videoTag';
 
   @override
@@ -19,6 +21,11 @@ class MainRouter implements IRouterProvider{
     router.define(userDetailPage, handler: Handler(handlerFunc: (context, params) {
       final userId = params['userId']?.first ?? '';
       return UserDetailPage(userId: userId);
+    }));
+    router.define(audioChatPage, handler: Handler(handlerFunc: (context, params) {
+      final channelName = params['channelName']?.first ?? 'default';
+      final userName = params['userName']?.first;
+      return AudioChatPage(channelName: channelName, userName: userName);
     }));
     // router.define(videoTagPage, handler: Handler(handlerFunc: (_, __) => VideoTagPage()));
     // router.define(shopSettingPage, handler: Handler(handlerFunc: (_, __) => const ShopSettingPage()));

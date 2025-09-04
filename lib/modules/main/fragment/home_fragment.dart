@@ -262,10 +262,9 @@ class _HomeFragmentState extends State<HomeFragment> {
             GestureDetector(
               onTap: () {
                 viewModel.onChatButtonTap(tag);
-                // 这里可以导航到聊天页面或显示聊天功能开发中的提示
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('聊天功能开发中...')),
-                );
+                // 导航到音频聊天页面
+                final channelName = 'room_${viewModel.getUserId(tag)}';
+                NavigatorUtils.push(context, '${MainRouter.audioChatPage}?channelName=$channelName&userName=用户$tag');
               },
               child: Container(
                 width: 40,
